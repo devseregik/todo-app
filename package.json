@@ -10,6 +10,7 @@
     "react-scripts": "1.1.4",
     "react-simple-flex-grid": "^1.2.1",
     "redux": "^4.0.0",
+    "redux-actions": "^2.3.0",
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.79.1",
     "underscore": "^1.9.0"

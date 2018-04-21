@@ -4,7 +4,7 @@ import { Message, Divider } from 'semantic-ui-react';
 
 import Item from '../components/List/Item';
 
-import { TODO_DONE, TODO_REMOVE } from '../store/actions/todo';
+import { todoDone, todoRemove } from '../store/actions/todo';
 
 /**
  * Logic by todos list output.
@@ -13,12 +13,29 @@ import { TODO_DONE, TODO_REMOVE } from '../store/actions/todo';
  * @extends {Component}
  */
 class ListContainer extends Component {
-    handleDone(id) {
-        this.props.doneTodo(id);
+    constructor() {
+        super();
+
+        this.handleDone = this.handleDone.bind(this);
+        this.handleRemove = this.handleRemove.bind(this);
     }
 
+    /**
+     * Handle mark todo item as done.
+     * 
+     * @param {String} id Identifier by todo item.
+     */
+    handleDone(id) {
+        this.props.onTodoDone(id);
+    }
+
+    /**
+     * Handle to remove todo item.
+     *  
+     * @param {String} id Identifier by todo item.
+     */
     handleRemove(id) {
-        this.props.removeTodo(id);
+        this.props.onTodoRemove(id);
     }
 
     render() {
@@ -33,8 +50,8 @@ class ListContainer extends Component {
                             return <Item 
                                         { ...item }
                                         key={ index }  
-                                        handleDone={ this.handleDone.bind(this) }
-                                        handleRemove={ this.handleRemove.bind(this) }
+                                        handleDone={ this.handleDone }
+                                        handleRemove={ this.handleRemove }
                                      />
                         })
                 } 
@@ -52,17 +69,11 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        doneTodo(id) {
-            dispatch({
-                type: TODO_DONE,
-                payload: { id }
-            })
+        onTodoDone(id) {
+            dispatch(todoDone(id));
         },
-        removeTodo(id) {
-            dispatch({
-                type: TODO_REMOVE,
-                payload: { id }
-            })
+        onTodoRemove(id) {
+            dispatch(todoRemove(id));
         }
     }
 }
